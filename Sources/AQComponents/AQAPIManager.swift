@@ -34,7 +34,7 @@ final public class JSONDecoderService {
 }
 
 final public class AQAPIManager {
-
+    
     private init(){}
     public static let shared: AQAPIManager = AQAPIManager()
     
@@ -43,37 +43,37 @@ final public class AQAPIManager {
     }
     
     private var decoderService: JSONDecoderService = JSONDecoderService()
-
+    
     @available(iOS 13.0.0, *)
-    func request<T: Decodable>(_ urlString: String,
-                                  method: HTTPMethod,
-                                  session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
-                                  headers: [String: String]? = nil,
-                                  timeout: TimeInterval = 30.0,
-                                  parameters: [String: Any] = [:],
-                                  expecting type: T.Type) async -> Result<T, APIError> {
-
-            // Check network connectivity
+    public func request<T: Decodable>(_ urlString: String,
+                                      method: HTTPMethod,
+                                      session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
+                                      headers: [String: String]? = nil,
+                                      timeout: TimeInterval = 30.0,
+                                      parameters: [String: Any] = [:],
+                                      expecting type: T.Type) async -> Result<T, APIError> {
+        
+        // Check network connectivity
         if !AQNetworkMonitor.shared.isConnected {
             return .failure(.noInternetConnection)
         }
-
+        
         session.configuration.timeoutIntervalForRequest = timeout
-
+        
         guard var urlComponents = URLComponents(string: urlString) else {
             return .failure(.invalidURL)
         }
-
+        
         guard let url = urlComponents.url else {
             return .failure(.invalidURL)
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         let requestHeaders = headers ?? defaultHeaders
         request.allHTTPHeaderFields = requestHeaders
-
-
+        
+        
         switch method {
         case .get:
             urlComponents.queryItems = parameters.map {
@@ -84,13 +84,13 @@ final public class AQAPIManager {
                 request.httpBody = body
             }
         }
-
+        
         do {
             let (data, response) = try await session.data(for: request)
             if let httpResponse = response as? HTTPURLResponse {
                 dump(httpResponse.statusCode, name: "Response Code")
                 dump(httpResponse.allHeaderFields, name: "Response Headers")
-
+                
                 if (200..<300).contains(httpResponse.statusCode) == false {
                     return .failure(.invalidStatusCode(httpResponse.statusCode))
                 }
@@ -108,19 +108,19 @@ final public class AQAPIManager {
 @available(iOS 13.0, *)
 final public class AQNetworkMonitor {
     static let shared = AQNetworkMonitor()
-
+    
     private let monitor: NWPathMonitor
     private let queue = DispatchQueue(label: "NetworkMonitorQueue")
-
+    
     public var isConnected: Bool {
         return monitor.currentPath.status == .satisfied
     }
     public var isConnectedListener: PassthroughSubject<Bool, Never> = PassthroughSubject<Bool, Never>()
-
+    
     private init() {
         self.monitor = NWPathMonitor()
     }
-
+    
     func startMonitoring() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
@@ -133,7 +133,7 @@ final public class AQNetworkMonitor {
         }
         monitor.start(queue: queue)
     }
-
+    
     func stopMonitoring() {
         monitor.cancel()
     }
