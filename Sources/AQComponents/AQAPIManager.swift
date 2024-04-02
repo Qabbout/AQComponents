@@ -9,7 +9,7 @@ import Foundation
 import Network
 import Combine
 
-enum APIError: Error {
+private enum APIError: Error {
     case invalidURL
     case requestFailed(Error)
     case decodeFailed(Error)
@@ -17,23 +17,23 @@ enum APIError: Error {
     case noInternetConnection
 }
 
-enum HTTPMethod: String {
+private enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
-enum ContentType: String {
+private enum ContentType: String {
     case json = "application/json"
 }
 
-final class JSONDecoderService {
+final private class JSONDecoderService {
     func decode<T: Decodable>(_ data: Data, expecting type: T.Type) throws -> T {
         let decoder = JSONDecoder()
         return try decoder.decode(type, from: data)
     }
 }
 
-final class AQAPIManager {
+final public class AQAPIManager {
 
     private init(){}
     
@@ -42,7 +42,7 @@ final class AQAPIManager {
     }
 
     @available(iOS 13.0.0, *)
-    static func request<T: Decodable>(_ urlString: String,
+    fileprivate static func request<T: Decodable>(_ urlString: String,
                                      method: HTTPMethod,
                                      session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
                                      decoderService: JSONDecoderService = JSONDecoderService(),
@@ -104,7 +104,7 @@ final class AQAPIManager {
 }
 
 @available(iOS 13.0, *)
-final class AQNetworkMonitor {
+final public class AQNetworkMonitor {
     static let shared = AQNetworkMonitor()
 
     private let monitor: NWPathMonitor
