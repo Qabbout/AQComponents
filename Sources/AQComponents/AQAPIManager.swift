@@ -9,7 +9,7 @@ import Foundation
 import Network
 import Combine
 
-private enum APIError: Error {
+public enum APIError: Error {
     case invalidURL
     case requestFailed(Error)
     case decodeFailed(Error)
@@ -17,16 +17,16 @@ private enum APIError: Error {
     case noInternetConnection
 }
 
-private enum HTTPMethod: String {
+public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
-private enum ContentType: String {
+public enum ContentType: String {
     case json = "application/json"
 }
 
-final private class JSONDecoderService {
+final public class JSONDecoderService {
     func decode<T: Decodable>(_ data: Data, expecting type: T.Type) throws -> T {
         let decoder = JSONDecoder()
         return try decoder.decode(type, from: data)
@@ -38,19 +38,20 @@ final public class AQAPIManager {
     private init(){}
     public static let shared: AQAPIManager = AQAPIManager()
     
-    private static var defaultHeaders: [String: String] {
+    private var defaultHeaders: [String: String] {
         return ["Content-Type": "application/json"]
     }
+    
+    private var decoderService: JSONDecoderService = JSONDecoderService()
 
     @available(iOS 13.0.0, *)
-    fileprivate static func request<T: Decodable>(_ urlString: String,
-                                     method: HTTPMethod,
-                                     session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
-                                     decoderService: JSONDecoderService = JSONDecoderService(),
-                                     headers: [String: String]? = nil,
-                                     timeout: TimeInterval = 30.0,
-                                     parameters: [String: Any] = [:],
-                                     expecting type: T.Type) async -> Result<T, APIError> {
+    func request<T: Decodable>(_ urlString: String,
+                                  method: HTTPMethod,
+                                  session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
+                                  headers: [String: String]? = nil,
+                                  timeout: TimeInterval = 30.0,
+                                  parameters: [String: Any] = [:],
+                                  expecting type: T.Type) async -> Result<T, APIError> {
 
             // Check network connectivity
         if !AQNetworkMonitor.shared.isConnected {
