@@ -36,6 +36,7 @@ final private class JSONDecoderService {
 final public class AQAPIManager {
 
     private init(){}
+    public static let shared: AQAPIManager = AQAPIManager()
     
     private static var defaultHeaders: [String: String] {
         return ["Content-Type": "application/json"]
