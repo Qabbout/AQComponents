@@ -9,7 +9,7 @@ import UIKit
 
 extension UITableView {
     ///   Reload TableView  without Scroll
-    func reloadDataWithoutScroll() {
+    public func reloadDataWithoutScroll() {
         let offset = contentOffset
         reloadData()
         layoutIfNeeded()

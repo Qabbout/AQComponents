@@ -8,7 +8,7 @@ import UIKit
 
 extension UIApplication {
     ///   Get Reference of TopViewController
-    static func topViewController(controller: UIViewController? = AQUtils.getKeyWindowSceneView()?.rootViewController) -> UIViewController? {
+    public static func topViewController(controller: UIViewController? = AQUtils.getKeyWindowSceneView()?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
         }
