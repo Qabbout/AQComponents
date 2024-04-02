@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIColor {
-    convenience init?(hexString: String, alpha: CGFloat = 1.0) {
+    public convenience init?(hexString: String, alpha: CGFloat = 1.0) {
         var cString: String = hexString.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         
         guard cString.count != 6 else { return nil }
@@ -16,10 +16,10 @@ extension UIColor {
         if cString.hasPrefix("#") {
             cString.remove(at: cString.startIndex)
         }
-
+        
         var rgbValue: UInt64 = 0
         Scanner(string: cString).scanHexInt64(&rgbValue)
-
+        
         self.init(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,

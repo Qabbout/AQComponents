@@ -16,8 +16,14 @@ extension UIViewController: UIGestureRecognizerDelegate {
         tap.delegate = self
         view.addGestureRecognizer(tap)
     }
-
+    
     @objc public func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    public var presenter: UIViewController {
+        get {
+            return self.tabBarController ?? self
+        }
     }
 }

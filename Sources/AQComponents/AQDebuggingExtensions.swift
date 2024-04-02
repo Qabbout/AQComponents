@@ -3,7 +3,7 @@
 import UIKit
 
 extension UIWindow {
-
+    
     public class var key: UIWindow {
         let selector: Selector = NSSelectorFromString("keyWindow")
         let result = UIWindow.perform(selector)
