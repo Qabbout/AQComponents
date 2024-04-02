@@ -8,7 +8,7 @@
 import Foundation
 
     /// The main objective of this class is to persist data to the cahce folder on the device as json files
-final class AQDiskCacheManager<T: Codable> {
+final public class AQDiskCacheManager<T: Codable> {
 
     private let fileManager = FileManager.default
     private let directoryURL: URL
@@ -24,20 +24,20 @@ final class AQDiskCacheManager<T: Codable> {
         /// - Parameters:
         ///   - fileName: the name of the file to work with, for example; userCache.json
         ///   - maxAge: the lifetime of the cache
-    init(fileName: CacheFile, maxAge: TimeInterval) {
+    public init(fileName: CacheFile, maxAge: TimeInterval) {
         let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
         directoryURL = urls[0]
         fileURL = directoryURL.appendingPathComponent(fileName.rawValue)
         self.maxAge = maxAge
     }
 
-    func save(_ object: T) {
+    public func save(_ object: T) {
         let entry = CacheEntry(creationDate: Date(), value: object)
         let data = try? JSONEncoder().encode(entry)
         try? data?.write(to: fileURL, options: .atomic)
     }
 
-    func load() -> T? {
+    public func load() -> T? {
         if let data = try? Data(contentsOf: fileURL),
            let decodedEntry = try? JSONDecoder().decode(CacheEntry.self, from: data),
            Date().timeIntervalSince(decodedEntry.creationDate) <= maxAge {
@@ -47,7 +47,7 @@ final class AQDiskCacheManager<T: Codable> {
         return nil
     }
 
-    func removeCache(completion: ((Result<String, Error>) -> ())? = nil) {
+    public func removeCache(completion: ((Result<String, Error>) -> ())? = nil) {
         do {
             try fileManager.removeItem(at: fileURL)
             completion?(.success(fileURL.absoluteString))
@@ -57,7 +57,7 @@ final class AQDiskCacheManager<T: Codable> {
     }
 }
 
-enum CacheFile: String {
+public enum CacheFile: String {
     case userCache = "userCache.json"
     // Add more cases as needed
 }

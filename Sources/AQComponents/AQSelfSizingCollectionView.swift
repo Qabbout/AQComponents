@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AQSelfSizingCollectionView: UICollectionView {
+final public class AQSelfSizingCollectionView: UICollectionView {
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
         commonInit()
@@ -22,18 +22,18 @@ final class AQSelfSizingCollectionView: UICollectionView {
         isScrollEnabled = false
     }
 
-    override var contentSize: CGSize {
+    public override var contentSize: CGSize {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
 
-    override func reloadData() {
+    public override func reloadData() {
         super.reloadData()
         self.invalidateIntrinsicContentSize()
     }
 
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         layoutIfNeeded()
         return contentSize
     }

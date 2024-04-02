@@ -35,7 +35,9 @@ final public class JSONDecoderService {
 
 final public class AQAPIManager {
     
-    private init(){}
+    private init(){
+        AQNetworkMonitor.shared.startMonitoring()
+    }
     public static let shared: AQAPIManager = AQAPIManager()
     
     private var defaultHeaders: [String: String] {
@@ -44,7 +46,6 @@ final public class AQAPIManager {
     
     private var decoderService: JSONDecoderService = JSONDecoderService()
     
-    @available(iOS 13.0.0, *)
     public func request<T: Decodable>(_ urlString: String,
                                       method: HTTPMethod,
                                       session: URLSession = URLSession(configuration: URLSessionConfiguration.default),
@@ -105,9 +106,8 @@ final public class AQAPIManager {
     }
 }
 
-@available(iOS 13.0, *)
 final public class AQNetworkMonitor {
-    static let shared = AQNetworkMonitor()
+    public static let shared = AQNetworkMonitor()
     
     private let monitor: NWPathMonitor
     private let queue = DispatchQueue(label: "NetworkMonitorQueue")
@@ -121,7 +121,7 @@ final public class AQNetworkMonitor {
         self.monitor = NWPathMonitor()
     }
     
-    func startMonitoring() {
+    public func startMonitoring() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 dump("We're connected!")
@@ -134,7 +134,7 @@ final public class AQNetworkMonitor {
         monitor.start(queue: queue)
     }
     
-    func stopMonitoring() {
+    public func stopMonitoring() {
         monitor.cancel()
     }
 }

@@ -4,7 +4,7 @@ import UIKit
 
 extension UIWindow {
 
-    class var key: UIWindow {
+    public class var key: UIWindow {
         let selector: Selector = NSSelectorFromString("keyWindow")
         let result = UIWindow.perform(selector)
         return result?.takeUnretainedValue() as! UIWindow
@@ -13,7 +13,7 @@ extension UIWindow {
 
 extension UIView {
     
-    var recursiveDescription: NSString {
+    public var recursiveDescription: NSString {
         let selector: Selector = NSSelectorFromString("recursiveDescription")
         let result = perform(selector)
         return result?.takeUnretainedValue() as! NSString
@@ -23,7 +23,7 @@ extension UIView {
 
 extension UIViewController {
     
-    var printHierarchy: NSString {
+    public var printHierarchy: NSString {
         let selector: Selector = NSSelectorFromString("_printHierarchy")
         let result = perform(selector)
         return result?.takeUnretainedValue() as! NSString
