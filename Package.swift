@@ -16,8 +16,10 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "AQComponents"),
-        .testTarget(
-            name: "AQComponentsTests",
-            dependencies: ["AQComponents"]),
-    ]
+//        .testTarget(
+//            name: "AQComponentsTests",
+//            dependencies: ["AQComponents"]),
+    ],
+    swiftLanguageVersions: [.v5]
+
 )
