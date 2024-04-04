@@ -13,7 +13,6 @@ final public class AQDiskCacheManager<T: Codable> {
     private let fileManager = FileManager.default
     private let directoryURL: URL
     private let fileURL: URL
-    private var maxAge: TimeInterval
     
     private struct CacheEntry: Codable {
         let creationDate: Date
@@ -24,11 +23,10 @@ final public class AQDiskCacheManager<T: Codable> {
     /// - Parameters:
     ///   - fileName: the name of the file to work with, for example; userCache.json
     ///   - maxAge: the lifetime of the cache
-    public init(fileName: CacheFile, maxAge: TimeInterval) {
+    public init(fileName: String) {
         let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
         directoryURL = urls[0]
-        fileURL = directoryURL.appendingPathComponent(fileName.rawValue)
-        self.maxAge = maxAge
+        fileURL = directoryURL.appendingPathComponent(fileName)
     }
     
     public func save(_ object: T) {
@@ -37,7 +35,7 @@ final public class AQDiskCacheManager<T: Codable> {
         try? data?.write(to: fileURL, options: .atomic)
     }
     
-    public func load() -> T? {
+    public func load(maxAge: TimeInterval) -> T? {
         if let data = try? Data(contentsOf: fileURL),
            let decodedEntry = try? JSONDecoder().decode(CacheEntry.self, from: data),
            Date().timeIntervalSince(decodedEntry.creationDate) <= maxAge {
@@ -57,10 +55,6 @@ final public class AQDiskCacheManager<T: Codable> {
     }
 }
 
-public enum CacheFile: String {
-    case userCache = "userCache.json"
-    // Add more cases as needed
-}
 
 
 // Example
@@ -68,11 +62,11 @@ public enum CacheFile: String {
 //    let username: String
 //}
 //
-//let userCacheManager = AQDiskCacheManager<User>(fileName: .userCache, maxAge: 60*60*24)
+//let userCacheManager = AQDiskCacheManager<User>(fileName: "userCache.json")
 //
 //userCacheManager.save(User(username: "qabbout"))
 //
-//if let user = userCacheManager.load() {
+//if let user = userCacheManager.load(maxAge: 60*60*24) {
 //    print(user.username)
 //}
 
