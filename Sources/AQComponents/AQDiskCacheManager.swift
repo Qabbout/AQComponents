@@ -84,7 +84,7 @@ final public class AQDiskCacheManagerExperiment {
     ///   - maxAge: max age for the needed data, for example, the data since 60*60*24*7
     ///   - fileName: file name of the cache, for example, users.json
     /// - Returns: returns the decoded data
-     public func load<T: Codable>(maxAge: TimeInterval, fileName: String) -> T? {
+    public func load<T: Codable>(expectedType: T.Type, maxAge: TimeInterval, fileName: String) -> T? {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         if let data = try? Data(contentsOf: fileURL),
            let decodedEntry = try? JSONDecoder().decode(CacheEntry<T>.self, from: data),
