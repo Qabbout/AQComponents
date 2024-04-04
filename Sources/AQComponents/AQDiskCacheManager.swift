@@ -69,14 +69,14 @@ final public class AQDiskCacheManagerExperiment {
         directoryURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
   
-    func save<T: Codable>(data: T, fileName: String) {
+    public func save<T: Codable>(data: T, fileName: String) {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         let entry = CacheEntry(creationDate: Date(), value: data)
         let data = try? JSONEncoder().encode(entry)
         try? data?.write(to: fileURL, options: .atomic)
     }
     
-     func load<T: Codable>(maxAge: TimeInterval, fileName: String) -> T? {
+     public func load<T: Codable>(maxAge: TimeInterval, fileName: String) -> T? {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         if let data = try? Data(contentsOf: fileURL),
            let decodedEntry = try? JSONDecoder().decode(CacheEntry<T>.self, from: data),
@@ -87,7 +87,7 @@ final public class AQDiskCacheManagerExperiment {
         return nil
     }
     
-    func removeCache(fileName: String,completion: ((Result<String, Error>) -> ())? = nil) {
+    public func removeCache(fileName: String,completion: ((Result<String, Error>) -> ())? = nil) {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         do {
             try fileManager.removeItem(at: fileURL)
