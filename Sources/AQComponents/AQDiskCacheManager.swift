@@ -22,7 +22,6 @@ final public class AQDiskCacheManager<T: Codable> {
     /// The constructor of the disk manager
     /// - Parameters:
     ///   - fileName: the name of the file to work with, for example; userCache.json
-    ///   - maxAge: the lifetime of the cache
     public init(fileName: String) {
         let urls = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
         directoryURL = urls[0]
@@ -68,7 +67,11 @@ final public class AQDiskCacheManagerExperiment {
     private init() {
         directoryURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
-  
+    
+    /// Save the data to cache in the file
+    /// - Parameters:
+    ///   - data: the data to cache
+    ///   - fileName: file name of the cache, for example, users.json
     public func save<T: Codable>(data: T, fileName: String) {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         let entry = CacheEntry(creationDate: Date(), value: data)
@@ -76,6 +79,11 @@ final public class AQDiskCacheManagerExperiment {
         try? data?.write(to: fileURL, options: .atomic)
     }
     
+    /// load the cached data based on maximum age in the spicifed file name if available
+    /// - Parameters:
+    ///   - maxAge: max age for the needed data, for example, the data since 60*60*24*7
+    ///   - fileName: file name of the cache, for example, users.json
+    /// - Returns: returns the decoded data
      public func load<T: Codable>(maxAge: TimeInterval, fileName: String) -> T? {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         if let data = try? Data(contentsOf: fileURL),
@@ -87,6 +95,10 @@ final public class AQDiskCacheManagerExperiment {
         return nil
     }
     
+    /// Remove the cache of the spicifed file
+    /// - Parameters:
+    ///   - fileName: the file name to be cleared
+    ///   - completion: completion block with the resullt
     public func removeCache(fileName: String,completion: ((Result<String, Error>) -> ())? = nil) {
         let fileURL = directoryURL.appendingPathComponent(fileName)
         do {
