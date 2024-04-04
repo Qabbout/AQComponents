@@ -55,6 +55,48 @@ final public class AQDiskCacheManager<T: Codable> {
     }
 }
 
+final public class AQDiskCacheManagerExperiment {
+    
+    private let fileManager = FileManager.default
+    private let directoryURL: URL
+    public static let shared: AQDiskCacheManagerExperiment = AQDiskCacheManagerExperiment()
+    
+    private struct CacheEntry<T: Codable>: Codable {
+        let creationDate: Date
+        let value: T
+    }
+    private init() {
+        directoryURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first!
+    }
+  
+    public func save<T: Codable>(data: T, fileName: String) {
+        let fileURL = directoryURL.appendingPathComponent(fileName)
+        let entry = CacheEntry(creationDate: Date(), value: data)
+        let data = try? JSONEncoder().encode(entry)
+        try? data?.write(to: fileURL, options: .atomic)
+    }
+    
+    public func load<T: Codable>(maxAge: TimeInterval, fileName: String) -> T? {
+        let fileURL = directoryURL.appendingPathComponent(fileName)
+        if let data = try? Data(contentsOf: fileURL),
+           let decodedEntry = try? JSONDecoder().decode(CacheEntry<T>.self, from: data),
+           Date().timeIntervalSince(decodedEntry.creationDate) <= maxAge {
+            return decodedEntry.value
+        }
+        
+        return nil
+    }
+    
+    public func removeCache(fileName: String,completion: ((Result<String, Error>) -> ())? = nil) {
+        let fileURL = directoryURL.appendingPathComponent(fileName)
+        do {
+            try fileManager.removeItem(at: fileURL)
+            completion?(.success(fileURL.absoluteString))
+        } catch {
+            completion?(.failure(error))
+        }
+    }
+}
 
 
 // Example
