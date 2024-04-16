@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AQFileManager: NSObject {
+public final class AQFileManager: NSObject {
     
     public static let shared = AQFileManager()
     let fileManager = FileManager.default

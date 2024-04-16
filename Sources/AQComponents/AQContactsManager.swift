@@ -12,11 +12,11 @@ import ContactsUI
 
 public typealias ContactPickerCompletion = (_ didCancel:Bool, _ selectedContact: CNContact?) -> Void
 
-final public class MyCNContactPickerViewController: CNContactPickerViewController {
+public final class MyCNContactPickerViewController: CNContactPickerViewController {
     public var completion:ContactPickerCompletion?
 }
 
-final public class AQContactsManager: NSObject {
+public final class AQContactsManager: NSObject {
     
     public static let shared = AQContactsManager()
     public var contactsList = [CNContact]()

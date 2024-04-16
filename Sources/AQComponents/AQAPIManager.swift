@@ -26,14 +26,14 @@ public enum ContentType: String {
     case json = "application/json"
 }
 
-final public class JSONDecoderService {
-    func decode<T: Decodable>(_ data: Data, expecting type: T.Type) throws -> T {
+public final class JSONDecoderService {
+    public func decode<T: Decodable>(_ data: Data, expecting type: T.Type) throws -> T {
         let decoder = JSONDecoder()
         return try decoder.decode(type, from: data)
     }
 }
 
-final public class AQAPIManager {
+public final class AQAPIManager {
     
     private init(){
         AQNetworkMonitor.shared.startMonitoring()

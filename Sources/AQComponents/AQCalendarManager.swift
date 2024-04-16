@@ -8,7 +8,7 @@
 import UIKit
 import EventKit
 
-final public class AQCalendarManager: NSObject {
+public final class AQCalendarManager: NSObject {
     
     public static let shared = AQCalendarManager()
     private override init() {

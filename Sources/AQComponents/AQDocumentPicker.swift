@@ -12,7 +12,7 @@ public protocol AQDocumentPickerDelegate: AnyObject {
     func documentPickerWasCancelled(_ picker: AQDocumentPicker)
 }
 
-public class AQDocumentPicker: NSObject, UIDocumentPickerDelegate {
+public final class AQDocumentPicker: NSObject, UIDocumentPickerDelegate {
     
     private weak var viewController: UIViewController?
     private weak var delegate: AQDocumentPickerDelegate?

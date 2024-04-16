@@ -8,7 +8,7 @@
 import Foundation
 
 /// The main objective of this class is to persist data to the cahce folder on the device as json files
-final public class AQDiskCacheManager<T: Codable> {
+public final class AQDiskCacheManager<T: Codable> {
     
     private let fileManager = FileManager.default
     private let directoryURL: URL
@@ -54,7 +54,7 @@ final public class AQDiskCacheManager<T: Codable> {
     }
 }
 
-final public class AQDiskCacheManagerExperiment {
+public final class AQDiskCacheManagerExperiment {
     
     private let fileManager = FileManager.default
     private let directoryURL: URL

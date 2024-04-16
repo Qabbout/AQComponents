@@ -8,7 +8,7 @@
 import Foundation
 import Security
 
-public class AQKeychainManager: NSObject {
+public final class AQKeychainManager: NSObject {
     
     public static let shared = AQKeychainManager()
 

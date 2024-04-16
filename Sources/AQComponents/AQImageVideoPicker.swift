@@ -16,7 +16,7 @@ public protocol AQImageVideoPickerDelegate: AnyObject {
 }
 
 @available(iOS 14.0, *)
-public class AQImageVideoPicker: NSObject {
+public final class AQImageVideoPicker: NSObject {
     
     weak var delegate: AQImageVideoPickerDelegate?
     private weak var viewController: UIViewController?

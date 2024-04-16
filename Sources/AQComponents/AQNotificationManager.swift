@@ -8,7 +8,7 @@
 import UIKit
 import UserNotifications
 
-public class AQNotificationManager: NSObject, UNUserNotificationCenterDelegate {
+public final class AQNotificationManager: NSObject, UNUserNotificationCenterDelegate {
     
     public static let shared = AQNotificationManager()
     

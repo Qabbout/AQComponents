@@ -8,7 +8,7 @@
 import UIKit
 import MessageUI
 
-final public class AQUtils {
+public final class AQUtils {
     
     public static func setScrollViewWillEndDraggingToVerticalPaging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>, layout: UICollectionViewFlowLayout) {
         

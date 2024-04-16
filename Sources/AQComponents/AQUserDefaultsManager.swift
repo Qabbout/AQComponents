@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AQUserDefaultsManager: NSObject {
+public final class AQUserDefaultsManager: NSObject {
     
     public static let shared = AQUserDefaultsManager()
     

@@ -27,7 +27,7 @@ public extension AQLocationManager {
     }
 }
 
-public class AQLocationManager: NSObject {
+public final class AQLocationManager: NSObject {
     
     // MARK: - Private properties
     private var locationManager: CLLocationManager?
