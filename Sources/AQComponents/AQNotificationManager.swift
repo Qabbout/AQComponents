@@ -77,23 +77,23 @@ public class AQNotificationManager: NSObject, UNUserNotificationCenterDelegate {
             return [.badge, .sound]
         }
     }
-
+    
     public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let identifier = response.notification.request.identifier
         dump("Handled notification with ID: \(identifier)")
     }
     
     
-//    public func requestAuthorization(options: UNAuthorizationOptions, completion: @escaping (Bool) -> Void) {
-//        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
-//            if let error = error {
-//                dump("Authorization failed: \(error.localizedDescription)")
-//                completion(false)
-//            } else {
-//                completion(granted)
-//            }
-//        }
-//    }
+    //    public func requestAuthorization(options: UNAuthorizationOptions, completion: @escaping (Bool) -> Void) {
+    //        UNUserNotificationCenter.current().requestAuthorization(options: options) { granted, error in
+    //            if let error = error {
+    //                dump("Authorization failed: \(error.localizedDescription)")
+    //                completion(false)
+    //            } else {
+    //                completion(granted)
+    //            }
+    //        }
+    //    }
     
     //    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
     //        if #available(iOS 14.0, *) {
@@ -102,7 +102,7 @@ public class AQNotificationManager: NSObject, UNUserNotificationCenterDelegate {
     //            completionHandler([.badge, .sound])
     //        }
     //    }
-        
+    
     //    public func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     //        let identifier = response.notification.request.identifier
     //        dump("Handled notification with ID: \(identifier)")

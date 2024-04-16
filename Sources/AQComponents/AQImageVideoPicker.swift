@@ -27,7 +27,7 @@ public class AQImageVideoPicker: NSObject {
         self.delegate = delegate
     }
     
-    public func present(allowsMultipleSelection: Bool, configuration: PHPickerConfiguration,  completion: (() -> Void)? = nil) {
+    public func present(allowsMultipleSelection: Bool, configuration: PHPickerConfiguration, completion: (() -> Void)? = nil) {
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
         viewController?.present(picker, animated: true, completion: completion)
@@ -50,11 +50,11 @@ extension AQImageVideoPicker: PHPickerViewControllerDelegate {
         processPickedItems(imageResults, mediaType: .image)
         processPickedItems(videoResults, mediaType: .movie)
     }
-
+    
     private func processPickedItems(_ results: [PHPickerResult], mediaType: UTType) {
         let group = DispatchGroup()
         var urls: [URL] = []
-
+        
         for result in results {
             group.enter()
             result.itemProvider.loadFileRepresentation(forTypeIdentifier: mediaType.identifier) { (url, error) in
@@ -73,12 +73,12 @@ extension AQImageVideoPicker: PHPickerViewControllerDelegate {
             }
         }
     }
-
+    
     private func copyToTempLocation(originalURL: URL) -> URL? {
         let fileManager = FileManager.default
         let tempDirectoryURL = fileManager.temporaryDirectory
         let targetURL = tempDirectoryURL.appendingPathComponent(originalURL.lastPathComponent)
-
+        
         do {
             if fileManager.fileExists(atPath: targetURL.path) {
                 try fileManager.removeItem(at: targetURL)

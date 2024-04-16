@@ -1,6 +1,6 @@
 //
 //  AQLocalTranslator.swift
-//  
+//
 //
 //  Created by Abdulrahman Qabbout on 27/06/2023.
 //
