@@ -9,7 +9,7 @@ import UIKit
 import PhotosUI
 
 @available(iOS 14.0, *)
-protocol AQImageVideoPickerDelegate: AnyObject {
+public protocol AQImageVideoPickerDelegate: AnyObject {
     func imageVideoPicker(_ picker: AQImageVideoPicker, didSelectImagesAt urls: [URL])
     func imageVideoPicker(_ picker: AQImageVideoPicker, didSelectVideosAt urls: [URL])
     func imageVideoPickerDidCancel(_ picker: AQImageVideoPicker)
@@ -21,7 +21,7 @@ public class AQImageVideoPicker: NSObject {
     weak var delegate: AQImageVideoPickerDelegate?
     private weak var viewController: UIViewController?
     
-    init(viewController: UIViewController, delegate: AQImageVideoPickerDelegate) {
+    public init(viewController: UIViewController, delegate: AQImageVideoPickerDelegate) {
         super.init()
         self.viewController = viewController
         self.delegate = delegate
@@ -86,7 +86,7 @@ extension AQImageVideoPicker: PHPickerViewControllerDelegate {
             try fileManager.copyItem(at: originalURL, to: targetURL)
             return targetURL
         } catch {
-            print("Failed to copy file: \(error)")
+            dump("Failed to copy file: \(error)")
             return nil
         }
     }
