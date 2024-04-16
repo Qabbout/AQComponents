@@ -35,7 +35,7 @@ public final class JSONDecoderService {
 
 public final class AQAPIManager {
     
-    private init(){
+    private init() {
         AQNetworkMonitor.shared.startMonitoring()
     }
     public static let shared: AQAPIManager = AQAPIManager()

@@ -10,7 +10,7 @@ import Foundation
 public final class AQFileManager: NSObject {
     
     public static let shared = AQFileManager()
-    let fileManager = FileManager.default
+    private let fileManager = FileManager.default
     
     // MARK: - Utility Properties
     private var documentsURL: URL {
