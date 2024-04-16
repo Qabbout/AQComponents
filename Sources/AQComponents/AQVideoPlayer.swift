@@ -8,7 +8,6 @@
 import AVFoundation
 import UIKit
 
-
 protocol AQVideoPlayerDelegate: AnyObject {
     func playbackTimeChanged(to timeElapsed: Float)
 }
