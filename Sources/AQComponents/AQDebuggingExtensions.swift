@@ -1,3 +1,10 @@
+//
+//  AQDebuggingExtensions.swift
+//
+//
+//  Created by Abdulrahman Qabbout on 16/04/2024.
+//
+
 #if DEBUG
 
 import UIKit

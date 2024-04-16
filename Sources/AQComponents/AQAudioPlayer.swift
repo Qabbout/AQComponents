@@ -11,7 +11,7 @@ public final class AQAudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     public static let shared = AQAudioPlayer()
     private var audioPlayer: AVAudioPlayer?
-
+    
     private override init() {
         super.init()
     }
