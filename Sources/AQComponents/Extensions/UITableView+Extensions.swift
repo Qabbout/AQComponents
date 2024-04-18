@@ -57,5 +57,15 @@ public extension UITableView {
             }
         }
     }
+    func indexPathForView(_ view: UIView) -> IndexPath? {
+        let point = view.convert(CGPoint.zero, to: self)
+        return indexPathForRow(at: point)
+    }
     
+    func reloadWithoutAnimation(){
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        self.reloadData()
+        CATransaction.commit()
+    }
 }

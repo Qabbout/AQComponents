@@ -9,6 +9,10 @@ import UIKit
 
 public extension UICollectionView {
     
+    var sectionsIndexSet: IndexSet {
+        return IndexSet(integersIn: 0..<self.numberOfSections)
+    }
+    
     func register(name: String) {
         register(
             UINib(nibName: name, bundle: .main),
@@ -46,5 +50,35 @@ public extension UICollectionView {
         }
     }
     
+    func indexPathForView(_ view: UIView) -> IndexPath? {
+        let point = view.convert(CGPoint.zero, to: self)
+        return indexPathForItem(at: point)
+    }
     
+    func reloadDataWithoutAnimation() {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        
+        self.reloadData()
+        
+        CATransaction.commit()
+    }
+    
+    func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        
+        self.reloadSections(sections)
+        
+        CATransaction.commit()
+    }
+    
+    func reloadIndexPathsWithoutAnimation(_ indexPaths: [IndexPath]) {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        
+        self.reloadItems(at: indexPaths)
+        
+        CATransaction.commit()
+    }
 }

@@ -88,10 +88,6 @@ public extension Collection where Element: Hashable {
 }
 
 
-public extension Array {
-    
-}
-
 public extension Array where Element: Equatable {
     func equalContents(to other: [Element]) -> Bool {
         guard self.count == other.count else {return false}
